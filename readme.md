@@ -483,7 +483,7 @@ null
 
 ## Status
 
-Working prototype - usable, shows what it can do, demonstrates the concept, imperfect. Pull requests welcomed.
+Working prototype - usable, shows what it can do, demonstrates the concept, imperfect. Pull requests welcomed, if it's a simple and obvious bug fix go ahead, but for anything more major please open an issue to discuss first.
 
 ## License
 
