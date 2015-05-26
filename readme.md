@@ -1,6 +1,6 @@
 ![H5ON](h5on.png?raw=true)
 
-# HTML5 Object Notation
+# H5ON (HTML5 Object Notation)
 
 H5ON is an object notation, like JSON, for representing objects in HTML5.
 
