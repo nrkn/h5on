@@ -153,7 +153,7 @@ var output = $( input ).h5on().find( 'h5-object[data-keys~="Weight"]' ).h5on();
 
 When we say "human readable", we mean as rendered by a browser's layout engine.
 The notation for H5ON is more verbose than would be necessary if it were just a data transport mechanism.
-This is because is richly decorated with attributes and wrapper elements. 
+This is because H5ON is richly decorated with attributes and wrapper elements. 
 The purpose of this is twofold:
 
 1. Simpler selectors when traversing
