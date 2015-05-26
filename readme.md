@@ -502,7 +502,19 @@ The attributes are used for selection only - when converting back to an object, 
 Please note - the object has an attribute, `[data-keys]` which contains a whitespace separated list of keys. Because the list is whitespaced, any keys with a space in them will have their spaces converted to underscores. This allows the use of the [attribute contains word selector](http://api.jquery.com/attribute-contains-word-selector/) to select all objects that have the requested property:
 
 ```javascript
-var $objectsWithAWidth = $h5Object.find( 'js-object[data-keys~="width"]' );
+var $objectsWithAWidth = $h5Object.find( 'h5-object[data-keys~="Width"]' );
+```
+
+If we had a key that contained spaces, we would replace them with underscores when using the **attribute contains word selector**:
+
+```javascript
+var $matchingObjects = $h5Object.find( 'h5-object[data-keys~="Key_With_Spaces"]' );
+```
+
+In all other cases the normal key with spaces is fine:
+
+```javascript
+var $matchingValues = $h5Object.find( 'h5-value[data-key="Key With Spaces"]' );
 ```
 
 ### Null
