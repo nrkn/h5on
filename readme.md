@@ -80,7 +80,6 @@ var output = $h5WithWeights.h5on();
 
 Or, in one line:
 
-### JavaScript
 ```javascript
 var output = $( input ).h5on().find( 'h5-object[data-keys~="Weight"]' ).h5on();
 ```
