@@ -69,24 +69,43 @@ Note that the attributes are used only for ease of selection. When converting ba
 
 ### Number
 
+#### H5ON
 ```html
 <h5-number data-value="42">42</h5-number>
 ```
 
+#### JSON
+```javascript
+42
+```
+
 ### String
 
+#### H5ON
 ```html
 <h5-string data-value="Hello World">Hello World</h5-number>
 ```
 
+#### JSON
+```javascript
+"Hello World"
+```
+
 ### Boolean
 
+#### H5ON
 ```html
 <h5-boolean data-value="false">false</h5-boolean>
 ```
 
+#### JSON
+```javascript
+false
+```
+
 ### Array
 
+#### H5ON
 ```html
 <h5-array data-length="3">
   <h5-item data-index="0">
@@ -96,9 +115,14 @@ Note that the attributes are used only for ease of selection. When converting ba
     <h5-string data-value="Hello World">Hello World</h5-string>
   </h5-item>
   <h5-item data-index="2">
-    <h1>This is an ordinary DOM element</h1>
+    <h5-boolean data-value="false">false</h5-boolean>
   </h5-item>
 </h5-array>
+```
+
+#### JSON
+```javascript
+[ 42, "Hello World", false ]
 ```
 
 Each array item is wrapped in an <h5-item> element, much like an ordinary list (`<ul><li>` etc.) Again, this is for ease of selection and display.
@@ -107,6 +131,7 @@ The attributes are used for selection only - when converting back to an object, 
 
 ### Object
 
+#### H5ON
 ```html
 <h5-object data-keys="name age hobby">
   <h5-property data-key="name">
@@ -130,6 +155,15 @@ The attributes are used for selection only - when converting back to an object, 
 </h5-object>
 ```
 
+#### JSON
+```javascript
+{
+  "name": "Akosua",
+  "age": 39,
+  "hobby": "Hunting zombies"
+}
+```
+
 An object consists of any number of properties, each of which is a key-value pair.
 
 The attributes are used for selection only - when converting back to an object, the plugin expects an `<h5-object>` to contain only `<h5-property>` elements. Each `<h5-property>` element is expected to contain a single `<h5-key>` element and a single `<h5-value>` element. The plugin expected the `<h5-key>` element to contain a single text node and the text content of that node is used as the property's key. The `<h5-value>` element can contain anything. No error checking is performed!
@@ -142,8 +176,14 @@ var $objectsWithAWidth = $h5Object.find( 'js-object[data-keys~="width"]' );
 
 ### Null
 
+#### H5ON
 ```html
 <h5-null />
+```
+
+#### JSON
+```javascript
+null
 ```
 
 ## Status
