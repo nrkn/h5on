@@ -109,17 +109,23 @@ The attributes are used for selection only - when converting back to an object, 
 
 ```html
 <h5-object data-keys="name age hobby">
-  <h5-property>
+  <h5-property data-key="name">
     <h5-key>name</h5-key>
-    <h5-value>Akosua</h5-value>
+    <h5-value data-key="name">
+      <h5-string data-value="Akosua">Akosua</h5-string>    
+    </h5-value>
   </h5-property>
-  <h5-property>
+  <h5-property data-key="age">
     <h5-key>age</h5-key>
-    <h5-value>39</h5-value>
+    <h5-value data-key="age">
+      <h5-number data-value="39">39</h5-number>
+    </h5-value>
   </h5-property>
-  <h5-property>
+  <h5-property data-key="hobby">
     <h5-key>hobby</h5-key>
-    <h5-value>Hunting zombies</h5-value>
+    <h5-value data-key="hobby">
+      <h5-string data-value="Hunting zombies">Hunting zombies</h5-string>
+    </h5-value>
   </h5-property>
 </h5-object>
 ```
@@ -127,6 +133,12 @@ The attributes are used for selection only - when converting back to an object, 
 An object consists of any number of properties, each of which is a key-value pair.
 
 The attributes are used for selection only - when converting back to an object, the plugin expects an `<h5-object>` to contain only `<h5-property>` elements. Each `<h5-property>` element is expected to contain a single `<h5-key>` element and a single `<h5-value>` element. The plugin expected the `<h5-key>` element to contain a single text node and the text content of that node is used as the property's key. The `<h5-value>` element can contain anything. No error checking is performed!
+
+Please note - the object has an attribute, `[data-keys]` which contains a whitespace separated list of keys. Because the list is whitespaced, any keys with a space in them will have their spaces converted to underscores. This allows the use of the [Attribute contains word selector](http://api.jquery.com/attribute-contains-word-selector/) to select all objects that have the requested property:
+
+```javascript
+var $objectsWithAWidth = $h5Object.find( 'js-object[data-keys~="width"]' );
+```
 
 ### Null
 
