@@ -25,13 +25,116 @@ Calling the H5ON function again on these jQuery objects converts them back to a 
 
 In addition, H5ON also maps non-H5ON elements to and from JavaScript objects so that you can mix H5ON and ordinary DOM elements.
 
-### Example - find all objects in the graph which have a property named "weight":
+### Example - find all objects in the graph which have a property named "Weight":
 
+#### JavaScript
 ```javascript
 var myData = getDataFromSomewhere();
 var $h5Data = $( myData ).h5on();
-var $h5WithWeights = $h5Data.find( 'js-object[data-keys~="weight"]' );
+var $h5WithWeights = $h5Data.find( 'h5-object[data-keys~="Weight"]' );
 var withWeight = $h5WithWeights.h5on();
+```
+
+#### Input
+```javascript
+{
+  "Name": "Akosua",
+  "Occupation": "Zombie Hunter",
+  "Is Infected": false,
+  "Equipment": [
+    {
+      "Name": "Backpack",
+      "Type": "Container",
+      "Capacity": 40000,
+      "Weight": 2000,
+      "Contents": [
+        {
+          "Name": "Water Bottle",
+          "Type": "Container",
+          "Capacity": 1000,
+          "Weight": 0.2,
+          "Contents": {
+            "Name": "Water",
+            "Weight": 365.9
+          }
+        },
+        {
+          "Name": "Necronomicon",
+          "Type": "Book",
+          "Weight": 0.87
+        }
+      ]
+    },    
+    {
+      "Name": "Katana",
+      "Type": "Weapon",
+      "Class": "Edged",
+      "Damage": {
+        "Base": "4d6",
+        "Modifier": -2
+      },
+      "Weight": 1200
+    }
+  ]
+}
+```
+
+#### Output
+```javascript
+[
+  {
+    "Name": "Backpack",
+    "Type": "Container",
+    "Capacity": 40000,
+    "Weight": 2000,
+    "Contents": [
+      {
+        "Name": "Water Bottle",
+        "Type": "Container",
+        "Capacity": 1000,
+        "Weight": 0.2,
+        "Contents": {
+          "Name": "Water",
+          "Weight": 365.9
+        }
+      },
+      {
+        "Name": "Necronomicon",
+        "Type": "Book",
+        "Weight": 0.87
+      }
+    ]
+  },
+  {
+    "Name": "Water Bottle",
+    "Type": "Container",
+    "Capacity": 1000,
+    "Weight": 0.2,
+    "Contents": {
+      "Name": "Water",
+      "Weight": 365.9
+    }
+  },
+  {
+    "Name": "Water",
+    "Weight": 365.9
+  },
+  {
+    "Name": "Necronomicon",
+    "Type": "Book",
+    "Weight": 0.87
+  },
+  {
+    "Name": "Katana",
+    "Type": "Weapon",
+    "Class": "Edged",
+    "Damage": {
+      "Base": "4d6",
+      "Modifier": -2
+    },
+    "Weight": 1200
+  }
+]
 ```
 
 ## What do you mean by human readable?
