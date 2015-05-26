@@ -122,10 +122,12 @@ var output = $( input ).h5on().find( 'h5-object[data-keys~="Weight"]' ).h5on();
     "Type": "Container",
     "Capacity": 1000,
     "Weight": 0.2,
-    "Contents": {
-      "Name": "Water",
-      "Weight": 365.9
-    }
+    "Contents": [
+      {
+        "Name": "Water",
+        "Weight": 365.9
+      }
+    ]
   },
   {
     "Name": "Water",
@@ -248,22 +250,26 @@ The purpose of this is twofold:
                       <h5-property data-key="Contents">
                         <h5-key>Contents</h5-key>
                         <h5-value data-key="Contents">
-                          <h5-object data-keys="Name Weight">
-                            <h5-property data-key="Name">
-                              <h5-key>Name</h5-key>
-                              <h5-value data-key="Name">
-                                <h5-string data-value="Water">Water</h5-string>
-                              </h5-value>
-                            </h5-property>
-                            <h5-property data-key="Weight">
-                              <h5-key>Weight</h5-key>
-                              <h5-value data-key="Weight">
-                                <h5-number data-value="365.9">365.9</h5-number>
-                              </h5-value>
-                            </h5-property>
-                          </h5-object>
+                          <h5-array data-length="1">
+                            <h5-item data-index="0">
+                              <h5-object data-keys="Name Weight">
+                                <h5-property data-key="Name">
+                                  <h5-key>Name</h5-key>
+                                  <h5-value data-key="Name">
+                                    <h5-string data-value="Water">Water</h5-string>
+                                  </h5-value>
+                                </h5-property>
+                                <h5-property data-key="Weight">
+                                  <h5-key>Weight</h5-key>
+                                  <h5-value data-key="Weight">
+                                    <h5-number data-value="365.9">365.9</h5-number>
+                                  </h5-value>
+                                </h5-property>
+                              </h5-object>
+                            </h5-item>
+                          </h5-array>
                         </h5-value>
-                      </h5-property>
+                      </h5-property>                    
                     </h5-object>
                   </h5-item>
                   <h5-item data-index="1">
