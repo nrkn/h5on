@@ -2,9 +2,9 @@
 
 # H5ON (HTML5 Object Notation)
 
-H5ON is an object notation, like JSON, for representing objects in HTML5.
+H5ON is an object notation, like [JSON](http://json.org), for representing objects as [HTML5](http://www.w3.org/TR/html5/) elements.
 
-This working prototype is implemented as a jQuery plugin and is less than 1KB minified and gzipped.
+This working prototype is implemented as a [jQuery](https://jquery.com/) plugin and is less than 1KB minified and gzipped.
 
 It was created as a thought experiment with two goals in mind:
 
@@ -21,10 +21,10 @@ Coming soon
 
 ## Why would you want to traverse an object graph with jQuery?
 
-JSON data is an object graph - the DOM is an object graph. 
-Many developers are already familiar with using selectors to traverse and manipulate the DOM. 
-By representing an object graph as HTML5 custom elements, you can apply the same techniques you use on the DOM with any data.
-The plugin takes a plain (JSON-serializable) JavaScript object as data, and returns H5ON, which is made up of ordinary jQuery objects which can be traversed and manipulated as usual, and can be placed in a document for viewing.
+JSON data is an object graph - the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) is an object graph. 
+Many developers are already familiar with using [selectors](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors) to traverse and manipulate the DOM. 
+By representing an object graph as [HTML5 custom elements](http://www.w3.org/TR/custom-elements/), you can apply the same techniques you use on the DOM with any data.
+The plugin takes a plain (JSON-serializable) JavaScript object as data, and returns H5ON, which is composed of ordinary DOM elements wrapped in a jQuery object which can be traversed and manipulated as usual, and can be placed in a document for viewing.
 Calling the H5ON function again on these jQuery objects converts them back to a plain JavaScript object.
 
 In addition, H5ON also maps non-H5ON elements to and from JavaScript objects so that you can mix H5ON and ordinary DOM elements.
