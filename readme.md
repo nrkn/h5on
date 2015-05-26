@@ -77,8 +77,11 @@ In addition, H5ON also maps non-H5ON elements to and from JavaScript objects so 
 
 #### JavaScript
 ```javascript
+//convert a JavaScript object to H5ON
 var $h5Data = $( input ).h5on();
+//find all objects in the object graph with a key matching "Weight"
 var $h5WithWeights = $h5Data.find( 'h5-object[data-keys~="Weight"]' );
+//convert the H5ON back to a JavaScript object
 var output = $h5WithWeights.h5on();
 ```
 
