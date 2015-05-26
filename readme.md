@@ -49,10 +49,12 @@ In addition, H5ON also maps non-H5ON elements to and from JavaScript objects so 
           "Type": "Container",
           "Capacity": 1000,
           "Weight": 0.2,
-          "Contents": {
-            "Name": "Water",
-            "Weight": 365.9
-          }
+          "Contents": [
+            {
+              "Name": "Water",
+              "Weight": 365.9
+            }
+          ]
         },
         {
           "Name": "Necronomicon",
@@ -105,10 +107,12 @@ var output = $( input ).h5on().find( 'h5-object[data-keys~="Weight"]' ).h5on();
         "Type": "Container",
         "Capacity": 1000,
         "Weight": 0.2,
-        "Contents": {
-          "Name": "Water",
-          "Weight": 365.9
-        }
+        "Contents": [
+          {
+            "Name": "Water",
+            "Weight": 365.9
+          }
+        ]
       },
       {
         "Name": "Necronomicon",
