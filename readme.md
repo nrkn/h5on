@@ -15,7 +15,7 @@ As this is a thought experiment, please realise that there are many alternative 
 
 Despite that, you can do some interesting and powerful things with this approach.
 
-## Why would you want to traverse an object graph with jQuery
+## Why would you want to traverse an object graph with jQuery?
 
 JSON data is an object graph - the DOM is an object graph. 
 Many developers are already familiar with using selectors to traverse and manipulate the DOM. 
