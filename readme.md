@@ -4,7 +4,7 @@
 
 H5ON is an object notation, like [JSON](http://json.org), for representing objects as [HTML5](http://www.w3.org/TR/html5/) elements.
 
-This working prototype is implemented as a [jQuery](https://jquery.com/) plugin and is less than 1KB minified and gzipped.
+This [working prototype](h5on.js) is implemented as a [jQuery](https://jquery.com/) plugin and is less than 1KB minified and gzipped.
 
 It was created as a thought experiment with two goals in mind:
 
