@@ -99,7 +99,7 @@ This duplication of the value (in both an attribute and as a text node) is a goo
 </h5-array>
 ```
 
-Each array item is wrapped in an <h5-item> element, much like an ordinary list <ul><li> etc. Again, this is for ease of selection and display.
+Each array item is wrapped in an <h5-item> element, much like an ordinary list (`<ul><li>` etc.) Again, this is for ease of selection and display.
 
 ### Object
 
