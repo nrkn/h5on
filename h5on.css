@@ -1,0 +1,70 @@
+h5-null, h5-string, h5-number, h5-boolean {
+  display: inline;
+}
+
+h5-string:before, h5-string:after {
+  content: '\"';
+}
+
+h5-object {
+  display: inline-block;
+  border: 2px solid #999;
+}
+      
+h5-property {
+  display: table-row;
+}
+
+h5-key, h5-value {
+  display: table-cell;
+  vertical-align: top;
+  padding: 0.5em;
+  border-bottom: 1px solid #bbb;
+}
+
+h5-key {
+  font-weight: bold;
+  border-right: 1px solid #bbb;
+}      
+
+h5-property:last-child > h5-key, h5-property:last-child > h5-value {
+  border-bottom: 0;
+}
+      
+h5-array {
+  counter-reset: h5-array -1;
+  display: inline-block;
+  vertical-align: top;
+  border: 2px solid #bbb;
+}
+
+h5-item {
+  counter-increment: h5-array;
+  display: block;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5em;
+}
+
+h5-item:last-child {
+  border-bottom: 0;
+}
+
+h5-item:before {
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 0.5em;
+  content: '[' counter( h5-array ) ']';
+}
+
+h5-boolean {
+  font-style: italic;
+}
+
+h5-null:before {
+  font-weight: bold;
+  font-style: italic;
+  display: inline-block;
+  vertical-align: top;
+  content: 'null';
+}
