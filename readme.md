@@ -8,12 +8,12 @@ This working prototype is implemented as a jQuery plugin and is less than 1KB mi
 
 It was created as a thought experiment with two goals in mind:
 
-1. Traverse an object graph using jQuery
-2. The notation itself should be human readable when rendered by a layout engine 
+1. Traverse a JavaScript object graph using jQuery (specifically, a JSON-serializable object)
+2. The notation itself is rendered by layout engines in a human readable format
 
-As this is a thought experiment, please realise that there are many alternative ways to traverse an object graph, many much saner than this one.
+As this is a thought experiment, please be aware that there are many alternative ways to traverse object graphs, and that for the most part they are much saner than this one. You have been warned!
 
-Despite that, you can do some interesting and powerful things with this approach.
+Despite that caveat, you can do some interesting and powerful things using this approach.
 
 ## Why would you want to traverse an object graph with jQuery?
 
