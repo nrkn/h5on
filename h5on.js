@@ -34,15 +34,14 @@
       return toObj( $( value ) );
     }
     
+    //ensure json serializable
+    value = JSON.parse( JSON.stringify( value ) );
+    
     return toEl( value );
   }
   
   function toEl( obj ){
     var $el;
-    
-    if( $.type( obj ) === 'undefined' ){
-      obj = null;
-    }
     
     if( $.type( obj ) === 'null' ){
       $el = $( '<h5-null />' );
@@ -77,7 +76,7 @@
       
       $el = $array;
     }
-    
+        
     if( $.type( $el ) === 'undefined' && obj.tagName ){
       var $obj = $( '<' + obj.tagName + '></' + obj.tagName + '>' );
         

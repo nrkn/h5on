@@ -14,10 +14,12 @@
           "Type": "Container",
           "Capacity": 1000,
           "Weight": 0.2,
-          "Contents": {
-            "Name": "Water",
-            "Weight": 365.9
-          }
+          "Contents": [
+            {
+              "Name": "Water",
+              "Weight": 365.9
+            }
+          ]
         },
         {
           "Name": "Necronomicon",
