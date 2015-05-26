@@ -1,4 +1,4 @@
-![H5ON](h5on.svg?raw=true)
+![H5ON](h5on.png?raw=true)
 
 HTML5 Object Notation
 
