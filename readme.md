@@ -65,6 +65,8 @@ The primitive values are number, string and boolean. The notation for these is:
 
 This duplication of the value (in both an attribute and as a text node) is a good example of favouring verbosity over compactness to make the data easy to traverse and display.
 
+Note that the attributes are used only for ease of selection. When converting back to an object, the plugin expects this element to contain a single text node only, and the text content of that node is converted to the expected type. No error checking is performed!
+
 ### Number
 
 ```html
@@ -101,6 +103,8 @@ This duplication of the value (in both an attribute and as a text node) is a goo
 
 Each array item is wrapped in an <h5-item> element, much like an ordinary list (`<ul><li>` etc.) Again, this is for ease of selection and display.
 
+The attributes are used for selection only - when converting back to an object, the plugin expects an `<h5-array>` to contain only `<h5-item>` elements. The `<h5-item>` element can contain any other element. No error checking is performed!
+
 ### Object
 
 ```html
@@ -121,6 +125,8 @@ Each array item is wrapped in an <h5-item> element, much like an ordinary list (
 ```
 
 An object consists of any number of properties, each of which is a key-value pair.
+
+The attributes are used for selection only - when converting back to an object, the plugin expects an `<h5-object>` to contain only `<h5-property>` elements. Each `<h5-property>` element is expected to contain a single `<h5-key>` element and a single `<h5-value>` element. The plugin expected the `<h5-key>` element to contain a single text node and the text content of that node is used as the property's key. The `<h5-value>` element can contain anything. No error checking is performed!
 
 ### Null
 
