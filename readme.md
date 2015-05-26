@@ -36,7 +36,7 @@ Despite that caveat, you can do some interesting and powerful things using this 
 
 ## Demos and Examples
 
-Coming soon
+Coming soon, but for now see [h5on.org](http://h5on.org) or the demo.html included in this project for a brief demo.
 
 ## Why would you want to traverse an object graph with jQuery?
 
