@@ -8,14 +8,14 @@ This working prototype is implemented as a jQuery plugin and is less than 1KB mi
 
 It was created as a thought experiment with two goals in mind:
 
-1. Traverse an object graph using jQuery or document.querySelector
+1. Traverse an object graph using jQuery
 2. The notation itself should be human readable when rendered by a layout engine 
 
 As this is a thought experiment, please realise that there are many alternative ways to traverse an object graph, many much saner than this one.
 
 Despite that, you can do some interesting and powerful things with this approach.
 
-## Why would you want to traverse an object graph with jQuery/document.querySelector?
+## Why would you want to traverse an object graph with jQuery
 
 JSON data is an object graph - the DOM is an object graph. 
 Many developers are already familiar with using selectors to traverse and manipulate the DOM. 
