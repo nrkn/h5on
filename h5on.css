@@ -8,7 +8,7 @@ h5-string:before, h5-string:after {
 
 h5-object {
   display: inline-block;
-  border: 2px solid #999;
+  border: 1px solid #ccc;
 }
       
 h5-property {
@@ -19,12 +19,12 @@ h5-key, h5-value {
   display: table-cell;
   vertical-align: top;
   padding: 0.5em;
-  border-bottom: 1px solid #bbb;
+  border-bottom: 1px dotted #ccc;
 }
 
 h5-key {
   font-weight: bold;
-  border-right: 1px solid #bbb;
+  border-right: 1px dotted #ccc;
 }      
 
 h5-property:last-child > h5-key, h5-property:last-child > h5-value {
@@ -35,13 +35,13 @@ h5-array {
   counter-reset: h5-array -1;
   display: inline-block;
   vertical-align: top;
-  border: 2px solid #bbb;
+  border: 1px solid #eee;
 }
 
 h5-item {
   counter-increment: h5-array;
   display: block;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px dotted #eee;
   padding: 0.5em;
 }
 
