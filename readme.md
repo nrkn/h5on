@@ -15,6 +15,10 @@ As this is a thought experiment, please be aware that there are many alternative
 
 Despite that caveat, you can do some interesting and powerful things using this approach.
 
+## Demos and Examples
+
+Coming soon
+
 ## Why would you want to traverse an object graph with jQuery?
 
 JSON data is an object graph - the DOM is an object graph. 
