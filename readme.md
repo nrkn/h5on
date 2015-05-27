@@ -6,14 +6,14 @@ H5ON is an object notation, like [JSON](http://json.org), for representing objec
 
 This [working prototype](h5on.js) is implemented as a [jQuery](https://jquery.com/) plugin and is less than 1KB minified and gzipped.
 
-It was created as a thought experiment with two goals in mind:
+It came out of a thought experiment with two goals in mind:
 
-1. Traverse a JavaScript object graph using jQuery (specifically, a JSON-serializable object)
+1. Traverse a JavaScript object graph using jQuery
 2. The notation itself is rendered by layout engines in a human readable format
 
-As this is a thought experiment, please be aware that there are many alternative ways to traverse object graphs, and that for the most part they are much saner than this one. You have been warned!
+As this is the fruit of a thought experiment, please be aware that there are many alternative ways to traverse object graphs, and that for the most part they are much saner than this one. You have been warned!
 
-Despite that caveat, you can do some interesting and powerful things using this approach.
+Despite that caveat, you can do some interesting and powerful things using this approach. jQuery is a sophisticated traversal library and contains a lot of useful ways to search and filter data.
 
 #Table of Contents
 
