@@ -36,7 +36,39 @@ Despite that caveat, you can do some interesting and powerful things using this 
 
 ## Demos and Examples
 
-Coming soon, but for now see [h5on.org](http://h5on.org) or the demo.html included in this project for a brief demo.
+<a href="http://h5on.org/demo.html">Interactive demo</a>
+
+### Selector Examples
+
+####Find all of a specific type
+```javascript
+//strings
+var $strings = $( 'h5-string' );
+
+//objects
+var $objects = $( 'h5-object' );
+
+//etc.
+```
+
+####Find all objects that have a certain key
+```javascript
+var $withWeights = $( 'h5-object:has( > [data-key="Weight"] )' );
+```
+
+####Find all objects with a certain key value pair
+```javascript
+var $containers = $( 'h5-object:has( > [data-key="Type"][data-value="Container"] )' );
+```
+
+####Find all objects that contain a certain type
+```javascript
+var $withArrays = $( 'h5-object:has( > [data-type="array"] )' );
+```
+
+### Coming soon (maybe?)
+
+Add jQuery selector extensions to test values, eg :gt( 4 ), :gte( 4 ) etc.
 
 ## Why would you want to traverse an object graph with jQuery?
 
@@ -99,9 +131,9 @@ In addition, H5ON also maps non-H5ON elements to and from JavaScript objects so 
 #### JavaScript
 ```javascript
 //convert a JavaScript object to H5ON
-var $h5Data = $( input ).h5on();
+var $h5Data = $.h5on( input );
 //find all objects in the object graph with a key matching "Weight"
-var $h5WithWeights = $h5Data.find( 'h5-object[data-keys~="Weight"]' );
+var $h5WithWeights = $h5Data.find( 'h5-object:has( > [data-key]="Weight" )' );
 //convert the H5ON back to a JavaScript object
 var output = $h5WithWeights.h5on();
 ```
@@ -109,7 +141,7 @@ var output = $h5WithWeights.h5on();
 Or, in one line:
 
 ```javascript
-var output = $( input ).h5on().find( 'h5-object[data-keys~="Weight"]' ).h5on();
+var output = $.h5on( input ).find( 'h5-object:has( > [data-key]="Weight" )' ).h5on();
 ```
 
 #### Output
@@ -439,13 +471,13 @@ false
 #### H5ON
 ```html
 <h5-array data-length="3">
-  <h5-item data-index="0">
+  <h5-item data-index="0" data-type="number" data-value="42">
     <h5-number data-value="42">42</h5-number>
   </h5-item>
-  <h5-item data-index="1">
+  <h5-item data-index="1" data-type="string" data-value="Hello World">
     <h5-string data-value="Hello World">Hello World</h5-string>
   </h5-item>
-  <h5-item data-index="2">
+  <h5-item data-index="2" data-type="boolean" data-value="false">
     <h5-boolean data-value="false">false</h5-boolean>
   </h5-item>
 </h5-array>
@@ -465,21 +497,21 @@ The attributes are used for selection only - when converting back to an object, 
 #### H5ON
 ```html
 <h5-object data-keys="name age hobby">
-  <h5-property data-key="name">
+  <h5-property data-key="name" data-type="string" data-value="Akosua">
     <h5-key>name</h5-key>
-    <h5-value data-key="name">
+    <h5-value data-key="name" data-type="string" data-value="Akosua">
       <h5-string data-value="Akosua">Akosua</h5-string>    
     </h5-value>
   </h5-property>
-  <h5-property data-key="age">
+  <h5-property data-key="age" data-type="number" data-value="39">
     <h5-key>age</h5-key>
-    <h5-value data-key="age">
+    <h5-value data-key="age" data-type="number" data-value="39">
       <h5-number data-value="39">39</h5-number>
     </h5-value>
   </h5-property>
-  <h5-property data-key="hobby">
+  <h5-property data-key="hobby" data-type="string" data-value="Hunting zombies">
     <h5-key>hobby</h5-key>
-    <h5-value data-key="hobby">
+    <h5-value data-key="hobby" data-type="string" data-value="Hunting zombies">
       <h5-string data-value="Hunting zombies">Hunting zombies</h5-string>
     </h5-value>
   </h5-property>
