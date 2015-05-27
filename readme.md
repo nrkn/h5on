@@ -129,7 +129,7 @@ var heading = {
 };
 ```
 
-The ``children`` array can contain any mixture of text nodes, element nodes structured as per above, and H5ON elements - other node types such as comments are not currently supported (pull request welcome!).
+The ``children`` array can contain any mixture of text nodes (as strings), element nodes structured as per above, and H5ON elements - other node types such as comments are not currently supported (pull request welcome!).
 
 ## Demos and Examples
 
