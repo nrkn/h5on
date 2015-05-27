@@ -77,6 +77,12 @@ var age = $age.h5on();
 
 You can manipulate the H5ON DOM in the same way you would the standard DOM, using jQuery.
 
+You can create new H5ON elements however you like (provided the syntax is correct), but the easiest way to create them is to use the static helper:
+
+```javascript
+var $age = $.h5on( 39 );
+```
+
 The plugin expects you to respect the [H5ON syntax](#syntax) and performs no error checking. 
 
 When converting back to a JavaScript object, ``data-`` attributes are ignored, the syntax below explains how H5ON objects are converted to JavaScript objects.
