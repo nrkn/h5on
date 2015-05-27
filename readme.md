@@ -113,6 +113,24 @@ $( document ).on( 'click', 'h5-object', function(){
 });
 ```
 
+###Mixing HTML and H5ON
+
+The H5ON DOM can contain arbitrary HTML at any point. HTML is converted to and from JavaScript objects using the following syntax:
+
+```javascript
+var heading = {
+  "tagName": "h1",
+  "attr": {
+    "style": "color: red;"
+  },
+  "children": [
+    "Hello World"
+  ]
+};
+```
+
+The ``children`` array can contain any mixture of text nodes, element nodes structured as per above, and H5ON elements - other node types such as comments are not currently supported (pull request welcome!).
+
 ## Demos and Examples
 
 ### Demos
