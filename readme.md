@@ -18,7 +18,13 @@ Despite that caveat, you can do some interesting and powerful things using this 
 #Table of Contents
 
 1. [Usage](#usage)
+  1. [Convert an object to H5ON](#convert-an-object-to-h5on)
+  2. [Place H5ON in the DOM for viewing](#place-h5on-in-the-dom-for-viewing)
+  3. [Traverse H5ON using selectors](#traverse-h5on-using-selectors)
+  4. [Convert H5ON to an object](#convert-h5on-to-an-object)
 2. [Demos and Examples](#demos-and-examples)
+  1. [Demos](#demos)
+  2. [Selector Examples](#selector-examples)
 3. [Why would you want to traverse an object graph with jQuery?](#why-would-you-want-to-traverse-an-object-graph-with-jquery)
   1. [Example - find all objects in the graph which have a property named “Weight”:](#example---find-all-objects-in-the-graph-which-have-a-property-named-weight)
 4. [What do you mean by human readable?](#what-do-you-mean-by-human-readable)
