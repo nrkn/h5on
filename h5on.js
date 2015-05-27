@@ -13,7 +13,19 @@
     }
   });
 
-  $.fn.h5on = function(){        
+  $.fn.h5on = function( command ){
+    if( command === 'reflow' ){
+      var $farthest = $( this ).parents( 'h5-object, h5-array' ).last();      
+      
+      if( $farthest.length === 0 ) $farthest = $( this );
+      
+      var $new = $.h5on( $farthest.h5on() );
+      
+      $farthest.replaceWith( $new );
+      
+      return $new;
+    }
+    
     var arr = [];
     
     $.each( this, function( i, value ){
@@ -29,8 +41,8 @@
 
   $.h5on = h5on;
   
-  function h5on( value ){
-    if( value.jquery ){
+  function h5on( value, type ){
+    if( value && value.jquery ){
       return toObj( value );
     }
     
@@ -40,8 +52,63 @@
     
     //ensure json serializable
     value = JSON.parse( JSON.stringify( value ) );
+
+    if( type === 'item' ){
+      return arrayItem( value );
+    }
     
-    return toEl( value );
+    if( type === 'property' ){
+      return property( value.key, value.value );
+    }
+    
+    var $el = toEl( value );
+    
+    return $el;
+  }
+  
+  function arrayItem( value ){
+    var $item = elFromKey( 'item' );
+
+    var $value = toEl( value );
+    var type = $.type( value );
+    
+    $item.attr( 'data-type', type );
+    
+    if( isPrimitive( $value ) ){
+      if( value === null ) value = 'null';
+      $item.attr( 'data-value', value );
+    }
+
+    $item.append( $value );    
+    
+    return $item;
+  }
+  
+  function property( key, value ){
+    var $property = elFromKey( 'property' );
+    var $h5key = elFromKey( 'key' );
+    var $h5value = elFromKey( 'value' );
+    var $value = toEl( value );
+    var type = $.type( value );
+    
+    $property.attr( 'data-key', key );
+    $h5value.attr( 'data-key', key );
+    $property.attr( 'data-type', type );
+    $h5value.attr( 'data-type', type );
+    
+    if( isPrimitive( $value ) ){
+      if( value === null ) value = 'null';
+      $property.attr( 'data-value', value );
+      $h5value.attr( 'data-value', value );
+    }
+    
+    $h5key.html( key );
+    $h5value.html( $value );
+
+    $property.append( $h5key );
+    $property.append( $h5value );
+
+    return $property;
   }
   
   function toEl( obj ){
@@ -68,20 +135,12 @@
       $array.attr( 'data-length', obj.length );
 
       for( var i = 0; i < obj.length; i++ ){
-        var $item = elFromKey( 'item' );
-
         var value = obj[ i ];
-        var $value = toEl( value );
-        var type = $.type( value );
+
+        var $item = arrayItem( value );
         
         $item.attr( 'data-index', i );
-        $item.attr( 'data-type', type );
-        
-        if( isPrimitive( $value ) ){
-          $item.attr( 'data-value', value );
-        }
 
-        $item.append( $value );
         $array.append( $item );
       }
       
@@ -122,27 +181,7 @@
       }
       
       $.each( obj, function( key, value ){
-        var $property = elFromKey( 'property' );
-        var $h5key = elFromKey( 'key' );
-        var $h5value = elFromKey( 'value' );
-        var $value = toEl( value );
-        var type = $.type( value );
-        
-        $property.attr( 'data-key', key );
-        $h5value.attr( 'data-key', key );
-        $property.attr( 'data-type', type );
-        $h5value.attr( 'data-type', type );
-        
-        if( isPrimitive( $value ) ){
-          $property.attr( 'data-value', value );
-          $h5value.attr( 'data-value', value );
-        }
-        
-        $h5key.html( key );
-        $h5value.html( $value );
-
-        $property.append( $h5key );
-        $property.append( $h5value );        
+        var $property = property( key, value );     
         $obj.append( $property );
       });
       
@@ -157,7 +196,7 @@
     
     if( $el.is( 'h5-string' ) ) return $el.text() + '';
     
-    if( $el.is( 'h5-boolean' ) ) return !!$el.text();
+    if( $el.is( 'h5-boolean' ) ) return $el.text().toLowerCase().trim() === 'true';
     
     if( $el.is( 'h5-array' ) ){
       var arr = [];
