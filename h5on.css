@@ -10,6 +10,13 @@ h5-object {
   display: inline-block;
   border: 1px solid #ccc;
 }
+
+h5-object:empty:before {
+  font-family: monospace;
+  content: '{}';
+  display: block;
+  padding: 0.5em;
+}
       
 h5-property {
   display: table-row;
@@ -38,6 +45,13 @@ h5-array {
   border: 1px solid #eee;
 }
 
+h5-array:empty:before {
+  font-family: monospace;
+  content: '[]';
+  display: block;
+  padding: 0.5em;
+}
+
 h5-item {
   counter-increment: h5-array;
   display: block;
@@ -50,6 +64,7 @@ h5-item:last-child {
 }
 
 h5-item:before {
+  font-family: monospace;
   font-weight: bold;
   display: inline-block;
   vertical-align: top;
