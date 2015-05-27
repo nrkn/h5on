@@ -116,7 +116,7 @@
       $(document).foundation();
 
       $( function(){  
-        var $h5on = $( testData ).h5on();
+        var $h5on = $.h5on( testData );
         console.log( $h5on[ 0 ].outerHTML );
                 
         $( '#obj' ).append( $h5on );        
