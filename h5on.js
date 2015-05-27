@@ -1,4 +1,6 @@
 (function( $ ){
+  'use strict';
+  
   $.extend({
     keys: function( obj ){
       var arr = [];
@@ -25,6 +27,8 @@
     return arr;
   }
 
+  $.h5on = h5on;
+  
   function h5on( value ){
     if( value.jquery ){
       return toObj( value );
@@ -65,12 +69,19 @@
 
       for( var i = 0; i < obj.length; i++ ){
         var $item = elFromKey( 'item' );
+
+        var value = obj[ i ];
+        var $value = toEl( value );
+        var type = $.type( value );
+        
         $item.attr( 'data-index', i );
+        $item.attr( 'data-type', type );
+        
+        if( isPrimitive( $value ) ){
+          $item.attr( 'data-value', value );
+        }
 
-        var o = obj[ i ];
-        var $o = toEl( o );
-        $item.append( $o );
-
+        $item.append( $value );
         $array.append( $item );
       }
       
@@ -115,9 +126,17 @@
         var $h5key = elFromKey( 'key' );
         var $h5value = elFromKey( 'value' );
         var $value = toEl( value );
+        var type = $.type( value );
         
         $property.attr( 'data-key', key );
         $h5value.attr( 'data-key', key );
+        $property.attr( 'data-type', type );
+        $h5value.attr( 'data-type', type );
+        
+        if( isPrimitive( $value ) ){
+          $property.attr( 'data-value', value );
+          $h5value.attr( 'data-value', value );
+        }
         
         $h5key.html( key );
         $h5value.html( $value );
@@ -233,6 +252,10 @@
     //undefined
     return;
   };
+  
+  function isPrimitive( $el ){
+    return $el.is( 'h5-null, h5-string, h5-number, h5-boolean' );
+  }  
   
   function elFromKey( key ){
     return $( '<h5-' + key + '></h5-' + key + '>' );
