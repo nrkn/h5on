@@ -72,7 +72,7 @@ var age = $age.h5on();
 
 ### Selector Examples
 
-####Find all of a specific type
+#### Find all of a specific type
 ```javascript
 //strings
 var $strings = $( 'h5-string' );
@@ -83,19 +83,43 @@ var $objects = $( 'h5-object' );
 //etc.
 ```
 
-####Find all objects that have a certain key
+#### Find all objects that have a certain key
 ```javascript
 var $withWeights = $( 'h5-object:has( > [data-key="Weight"] )' );
 ```
 
-####Find all objects with a certain key value pair
+#### Find all objects with a certain key value pair
 ```javascript
 var $containers = $( 'h5-object:has( > [data-key="Type"][data-value="Container"] )' );
 ```
 
-####Find all objects that contain a certain type
+#### Find all objects that contain a certain type
 ```javascript
 var $withArrays = $( 'h5-object:has( > [data-type="array"] )' );
+```
+
+#### Get all keys
+```javascript
+var $keys = $( 'h5-key' );
+```
+
+#### Get all values
+```javascript
+var $values = $( 'h5-value' );
+```
+
+#### Get all properties
+```javascript
+var $properties = $( 'h5-property' );
+```
+
+Please note that this will convert each property to a key/value pair object:
+
+```javascript
+{
+  "key": "name",
+  "value": "Akosua"
+}
 ```
 
 ### Coming soon (maybe?)
