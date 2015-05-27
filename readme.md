@@ -23,6 +23,7 @@ Despite that caveat, you can do some interesting and powerful things using this 
   3. [Traverse H5ON using selectors](#traverse-h5on-using-selectors)
   4. [Convert H5ON to an object](#convert-h5on-to-an-object)
   5. [Manipulation](#manipulation)
+  6. [Mixing HTML and H5ON](#mixing-html-and-h5on)
 2. [Demos and Examples](#demos-and-examples)
   1. [Demos](#demos)
   2. [Selector Examples](#selector-examples)
