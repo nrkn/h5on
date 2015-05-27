@@ -76,7 +76,8 @@ var age = $age.h5on();
 
 ### Demos
 
-<a href="http://h5on.org/demo.html">Interactive demo</a>
+1. [Interactive demo](http://h5on.org/demo.html)
+2. [Visual H5ON editor demo](http://h5on.org/editor.html)
 
 ### Selector Examples
 
