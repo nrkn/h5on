@@ -22,6 +22,7 @@ Despite that caveat, you can do some interesting and powerful things using this 
   2. [Place H5ON in the DOM for viewing](#place-h5on-in-the-dom-for-viewing)
   3. [Traverse H5ON using selectors](#traverse-h5on-using-selectors)
   4. [Convert H5ON to an object](#convert-h5on-to-an-object)
+  5. [Manipulation](#manipulation)
 2. [Demos and Examples](#demos-and-examples)
   1. [Demos](#demos)
   2. [Selector Examples](#selector-examples)
@@ -90,15 +91,15 @@ Another caveat is adding properties to objects, and items to arrays - there are 
 
 ```javascript
 //add a property to an object
-$someH5Object.append( $.h5on( { key: 'age", value: 39 }, 'property' ) );
+$someH5Object.append( $.h5on( { key: 'age', value: 39 }, 'property' ) );
 
 //add an item to an array
 $someH5Array.append( $.h5on( 'Hello World', 'item' ) );
 ```
 
-In both of these cases it is recommend that you use ``'reflow'`` as described above.
+In both of these cases it is recommend that you use ``'reflow'`` as described above to update the attributes.
 
-Please note that the reflow method uses brute force and rebuilds the entire H5ON DOM, so you will lose any events etc. attached to these elements (pull request to improve this welcomed!) - you should instead attach them to a parent element in the DOM with a selector filter, for example:
+Please note that the reflow method brute force rebuilds the entire H5ON DOM, so you will lose any events etc. attached to these elements (pull request welcomed!) - this won't affect you if you instead attach the event to a parent element in the DOM with a selector filter, for example:
 
 ```javascript
 $( document ).on( 'click', 'h5-object', function(){
