@@ -72,6 +72,40 @@ var $age = $person.find( 'h5-value[data-key="age"]' );
 var age = $age.h5on();
 ```
 
+### Manipulation
+
+You can manipulate the H5ON DOM in the same way you would the standard DOM, using jQuery.
+
+The plugin expects you to respect the [H5ON syntax](#syntax) and performs no error checking. 
+
+When converting back to a JavaScript object, ``data-`` attributes are ignored, the syntax below explains how H5ON objects are converted to JavaScript objects.
+
+However, changing the H5ON DOM via jQuery means that the auto-generated attributes used for traversal may get out of sync. If you intend to perform selector queries subsequent to editing the DOM, call the h5on method on the jQuery object with the argument ``'reflow'`` to update the attributes:
+
+```javascript
+$recentlyModified.h5on( 'reflow' );
+```
+
+Another caveat is adding properties to objects, and items to arrays - there are overloads on the static ``$.h5on()`` method for creating these elements:
+
+```javascript
+//add a property to an object
+$someH5Object.append( $.h5on( { key: 'age", value: 39 }, 'property' ) );
+
+//add an item to an array
+$someH5Array.append( $.h5on( 'Hello World', 'item' ) );
+```
+
+In both of these cases it is recommend that you use ``'reflow'`` as described above.
+
+Please note that the reflow method uses brute force and rebuilds the entire H5ON DOM, so you will lose any events etc. attached to these elements (pull request to improve this welcomed!) - you should instead attach them to a parent element in the DOM with a selector filter, for example:
+
+```javascript
+$( document ).on( 'click', 'h5-object', function(){
+//...
+});
+```
+
 ## Demos and Examples
 
 ### Demos
