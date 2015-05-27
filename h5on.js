@@ -186,9 +186,13 @@
     }
 
     if( $el.is( 'h5-property' ) ){
-      var $value = $el.find( '> h5-value > *' );
+      var key = toObj( $el.find( '> h5-key' ) );
+      var value = toObj( $el.find( '> h5-value' ) );
       
-      return toObj( $value );
+      return { 
+        key: key, 
+        value: value
+      };
     }
 
     if( $el.is( 'h5-value' ) ){
