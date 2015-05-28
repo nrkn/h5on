@@ -191,6 +191,23 @@ Please note that this will convert each property to a key/value pair object:
 }
 ```
 
+#### Custom selector expressions
+
+The plugin has the following custom selector expressions:
+
+```css
+:valLte( value )
+:valLt( value )
+:valGte( value )
+:valGt( value )
+```
+
+For example:
+
+```javascript
+var $lightObjects = $( 'h5-object:has( > h5-property[data-key="Weight"]:valLt( 500 ) )' )
+```
+
 ### Coming soon (maybe?)
 
 ~~Add jQuery selector extensions to test values, eg :valGt( 4 ), :valGte( 4 ) etc.~~ - done! 
