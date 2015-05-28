@@ -205,7 +205,7 @@ The plugin has the following custom selector expressions:
 For example:
 
 ```javascript
-var $lightObjects = $( 'h5-object:has( > h5-property[data-key="Weight"]:valLt( 500 ) )' )
+var $lightObjects = $( 'h5-object:has( > [data-key="Weight"]:valLt( 500 ) )' )
 ```
 
 ### Coming soon (maybe?)
