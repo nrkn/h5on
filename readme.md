@@ -1,5 +1,9 @@
 ![H5ON](h5on.png?raw=true)
 
+# IMPORTANT #
+
+[H5ON is about to undergo a major refactor](https://github.com/nrkn/h5on/issues/1) in the next day or so.
+
 # H5ON (HTML5 Object Notation)
 
 H5ON is an object notation, like [JSON](http://json.org), for representing objects as [HTML5](http://www.w3.org/TR/html5/) elements.
