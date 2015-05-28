@@ -10,6 +10,55 @@
       });
       
       return arr;
+    }    
+  });
+  
+  var comparers = {
+    lte: function( a, b ){
+      return a <= b;
+    },
+    lt: function( a, b ){
+      return a < b;
+    },
+    gte: function( a, b ){
+      return a >= b;
+    },
+    gt: function( a, b ){
+      return a > b;
+    }
+  };
+  
+  function compare( el, value, operator ){
+    var $el = $( el );
+    
+    if( $el.is( 'h5-number, h5-string, h5-property, h5-value, h5-item, h5-key, h5-boolean, h5-null' ) ){
+      var elValue = toObj( $el );
+      if( $el.is( 'h5-property' ) ){
+        elValue = elValue.value;
+      }
+      
+      value = JSON.parse( value );
+      
+      if( $.type( comparers[ operator ] ) === 'function' ){
+        return comparers[ operator ]( elValue, value );
+      }
+    }
+    
+    return false;
+  };
+  
+  $.extend( $.expr[ ':' ], {
+    valLte: function( el, i, args ){
+      return compare( el, args[ 3 ], 'lte' );
+    },
+    valLt: function( el, i, args ){
+      return compare( el, args[ 3 ], 'lt' );
+    },
+    valGte: function( el, i, args ){
+      return compare( el, args[ 3 ], 'gte' );
+    },
+    valGt: function( el, i, args ){
+      return compare( el, args[ 3 ], 'gt' );
     }
   });
 
