@@ -193,7 +193,7 @@ Please note that this will convert each property to a key/value pair object:
 
 ### Coming soon (maybe?)
 
-~~~Add jQuery selector extensions to test values, eg :valGt( 4 ), :valGte( 4 ) etc.~~~ - done! 
+~~Add jQuery selector extensions to test values, eg :valGt( 4 ), :valGte( 4 ) etc.~~ - done! 
 
 ## Why would you want to traverse an object graph with jQuery?
 
