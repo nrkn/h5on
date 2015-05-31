@@ -419,7 +419,7 @@ false
   <js-number>42</js-number>
   <js-string>Hello World</js-string>
   <js-boolean>false</js-boolean>
-</h5-array>
+</js-array>
 ```
 
 #### JSON
