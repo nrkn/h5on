@@ -32,6 +32,7 @@
     
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/foundation.min.js"></script>
+    <script src="pretty.js"></script>
     <script src="h5on.js"></script>
     <script>
       var testData = {
@@ -76,42 +77,6 @@
           }
         ]
       };
-            
-      function pretty( $el ){        
-        function print( $el, depth ){
-          var result = '';
-          $el.each( function(){
-            var $current = $( this );  
-            var el = $current[ 0 ];
-            result += Array( depth * 2 + 1 ).join( ' ' );
-            
-            if( el.nodeType === 3 ){
-              result += el.textContent;
-              result += '\n';
-              return;
-            }
-            
-            result += '<';
-            result += el.tagName.toLowerCase();
-            if( el.attributes.length ){
-              $.each( el.attributes, function( i, attribute ){
-                result += ( ' ' + attribute.name + '="' + attribute.value + '"' );
-              });
-            }
-            result += '>\n';
-            $.each( $current.contents(), function( i, content ){
-              result += print( $( content ), depth + 1 );
-            });
-            result += Array( depth * 2 + 1 ).join( ' ' );
-            result += '</';
-            result += el.tagName.toLowerCase();
-            result += '>\n'
-          });
-          return result;
-        }
-        
-        return print( $el, 0 );
-      }
     
       $(document).foundation();
 
@@ -123,7 +88,7 @@
         $( '#json' ).append( JSON.stringify( testData, null, 2 ) );
         $( '#html' ).append( pretty( $h5on ).replace( /\</g, '&lt;' ) );        
         
-        var $h5WithWeights = $h5on.find( 'h5-object[data-keys~="Weight"]' );
+        var $h5WithWeights = $h5on.find( 'js-object:has( [data-key="Weight"] )' );
         var withWeight = $h5WithWeights.h5on();
         console.log( JSON.stringify( withWeight, null, 2 ) );
       });  

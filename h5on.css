@@ -1,85 +1,41 @@
-h5-null, h5-string, h5-number, h5-boolean {
-  display: inline;
-}
-
-h5-string:before, h5-string:after {
-  content: '\"';
-}
-
-h5-object {
+js-object, js-array, js-string, js-number, js-boolean, js-null {
   display: inline-block;
-  border: 1px solid #ccc;
 }
-
-h5-object:empty:before {
-  font-family: monospace;
-  content: '{}';
-  display: block;
-  padding: 0.5em;
-}
-      
-h5-property {
+ 
+js-object > *, js-array > * {
   display: table-row;
 }
-
-h5-key, h5-value {
+ 
+js-object > *:before, js-array > *:before {
   display: table-cell;
-  vertical-align: top;
-  padding: 0.5em;
-  border-bottom: 1px dotted #ccc;
-}
-
-h5-key {
   font-weight: bold;
-  border-right: 1px dotted #ccc;
-}      
-
-h5-property:last-child > h5-key, h5-property:last-child > h5-value {
-  border-bottom: 0;
-}
-      
-h5-array {
-  counter-reset: h5-array -1;
-  display: inline-block;
-  vertical-align: top;
-  border: 1px solid #eee;
-}
-
-h5-array:empty:before {
-  font-family: monospace;
-  content: '[]';
-  display: block;
-  padding: 0.5em;
-}
-
-h5-item {
-  counter-increment: h5-array;
-  display: block;
-  border-bottom: 1px dotted #eee;
-  padding: 0.5em;
-}
-
-h5-item:last-child {
-  border-bottom: 0;
-}
-
-h5-item:before {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  vertical-align: top;
   padding-right: 0.5em;
-  content: '[' counter( h5-array ) ']';
 }
-
-h5-boolean {
-  font-style: italic;
+ 
+js-object:empty:after {
+  content: '{}'
 }
-
-h5-null:before {
-  font-weight: bold;
-  font-style: italic;
-  display: inline-block;
-  vertical-align: top;
+ 
+js-object > *:before {
+  content: attr( data-key );
+}
+ 
+js-array {
+  counter-reset: array -1;
+}
+ 
+js-array:empty:after {
+  content: '[]'
+}
+ 
+js-array > *:before {
+  content: '[' counter( array ) ']';
+}      
+ 
+js-array > * {
+  counter-increment: array;
+}      
+ 
+js-null:after {
   content: 'null';
 }

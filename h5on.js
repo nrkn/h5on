@@ -1,19 +1,25 @@
 (function( $ ){
   'use strict';
   
-  $.extend({
-    keys: function( obj ){
-      var arr = [];
-      
-      $.each( obj, function( key ){ 
-        arr.push( key ); 
-      });
-      
-      return arr;
-    }    
-  });
-  
+  $.h5on = function( obj, key ){ 
+    return $( toEl( obj, key ) );
+  };
+   
+  $.fn.h5on = function(){
+    var $this = $( this );
+    if( $this.length === 1 && $this.is( 'js-object, js-array, js-number, js-string, js-boolean, js-null' ) ) return toObj( $this[ 0 ] );
+    
+    var result = [];
+    $.each( this, function( i, value ){
+      result.push( toObj( value ) );
+    });
+    return result;
+  }
+   
   var comparers = {
+    eq: function( a, b ){
+      return a == b;
+    },
     lte: function( a, b ){
       return a <= b;
     },
@@ -27,15 +33,12 @@
       return a > b;
     }
   };
-  
+   
   function compare( el, value, operator ){
     var $el = $( el );
     
-    if( $el.is( 'h5-number, h5-string, h5-property, h5-value, h5-item, h5-key, h5-boolean, h5-null' ) ){
-      var elValue = toObj( $el );
-      if( $el.is( 'h5-property' ) ){
-        elValue = elValue.value;
-      }
+    if( $el.is( 'js-number, js-string, js-boolean, js-null' ) ){
+      var elValue = toObj( el );
       
       value = JSON.parse( value );
       
@@ -46,8 +49,11 @@
     
     return false;
   };
-  
+   
   $.extend( $.expr[ ':' ], {
+    valEq: function( el, i, args ){
+      return compare( el, args[ 3 ], 'eq' );
+    },
     valLte: function( el, i, args ){
       return compare( el, args[ 3 ], 'lte' );
     },
@@ -61,303 +67,112 @@
       return compare( el, args[ 3 ], 'gt' );
     }
   });
-
-  $.fn.h5on = function( command ){
-    if( command === 'reflow' ){
-      var $farthest = $( this ).parents( 'h5-object, h5-array' ).last();      
-      
-      if( $farthest.length === 0 ) $farthest = $( this );
-      
-      var $new = $.h5on( $farthest.h5on() );
-      
-      $farthest.replaceWith( $new );
-      
-      return $new;
+   
+  function createEl( tag, val, key ){
+    var el = document.createElement( 'js-' + tag );
+    if( key !== undefined ){
+      el.setAttribute( 'data-key', key );
     }
-    
-    var arr = [];
-    
-    $.each( this, function( i, value ){
-      arr.push( h5on( value ) );
-    });
-    
-    if( arr.length === 1 ){
-      return arr[ 0 ];
+    if( val !== undefined ){
+      el.textContent = val;
     }
-    
-    return arr;
+    return el;
   }
-
-  $.h5on = h5on;
-  
-  function h5on( value, type ){
-    if( value && value.jquery ){
-      return toObj( value );
+   
+  function toEl( obj, key ){
+    obj = JSON.parse( JSON.stringify( obj ) );
+    
+    var type = typeof obj;
+    
+    if( type === 'number' ) return createEl( 'number', obj, key );
+    if( type === 'string' ) return createEl( 'string', obj, key );
+    if( type === 'boolean' ) return createEl( 'boolean', obj, key );
+    if( !obj ) return createEl( 'null', undefined, key );
+    
+    if( Array.isArray( obj ) ){
+      var el = createEl( 'array', undefined, key );
+      obj.forEach( function( child ){
+        el.appendChild( toEl( child ) );
+      });
+      return el;
     }
     
-    if( value instanceof HTMLElement ){
-      return toObj( $( value ) );
-    }
-    
-    //ensure json serializable
-    value = JSON.parse( JSON.stringify( value ) );
-
-    if( type === 'item' ){
-      return arrayItem( value );
-    }
-    
-    if( type === 'property' ){
-      return property( value.key, value.value );
-    }
-    
-    var $el = toEl( value );
-    
-    return $el;
-  }
-  
-  function arrayItem( value ){
-    var $item = elFromKey( 'item' );
-
-    var $value = toEl( value );
-    var type = $.type( value );
-    
-    $item.attr( 'data-type', type );
-    
-    if( isPrimitive( $value ) ){
-      if( value === null ) value = 'null';
-      $item.attr( 'data-value', value );
-    }
-
-    $item.append( $value );    
-    
-    return $item;
-  }
-  
-  function property( key, value ){
-    var $property = elFromKey( 'property' );
-    var $h5key = elFromKey( 'key' );
-    var $h5value = elFromKey( 'value' );
-    var $value = toEl( value );
-    var type = $.type( value );
-    
-    $property.attr( 'data-key', key );
-    $h5value.attr( 'data-key', key );
-    $property.attr( 'data-type', type );
-    $h5value.attr( 'data-type', type );
-    
-    if( isPrimitive( $value ) ){
-      if( value === null ) value = 'null';
-      $property.attr( 'data-value', value );
-      $h5value.attr( 'data-value', value );
-    }
-    
-    $h5key.html( key );
-    $h5value.html( $value );
-
-    $property.append( $h5key );
-    $property.append( $h5value );
-
-    return $property;
-  }
-  
-  function toEl( obj ){
-    var $el;
-    
-    if( $.type( obj ) === 'null' ){
-      $el = $( '<h5-null />' );
-    }
-    
-    if( $.type( obj ) === 'number' ){
-      $el = literalEl( 'number', obj );
-    }
-    
-    if( $.type( obj ) === 'string' ){
-      $el = literalEl( 'string', obj );
-    }
-    
-    if( $.type( obj ) === 'boolean' ){
-      $el = literalEl( 'boolean', obj );
-    }
-    
-    if( $.type( obj ) === 'array' ){
-      var $array = elFromKey( 'array' );
-      $array.attr( 'data-length', obj.length );
-
-      for( var i = 0; i < obj.length; i++ ){
-        var value = obj[ i ];
-
-        var $item = arrayItem( value );
-        
-        $item.attr( 'data-index', i );
-
-        $array.append( $item );
+    if( obj.tagName ){
+      var el = document.createElement( obj.tagName );
+      
+      if( el.attributes ){
+        for( key in el.attributes ){
+          el.setAttribute( key, el.attributes[ key ] );
+        }
       }
       
-      $el = $array;
-    }
-        
-    if( $.type( $el ) === 'undefined' && obj.tagName ){
-      var $obj = $( '<' + obj.tagName + '></' + obj.tagName + '>' );
-        
-      if( obj.attr ){
-        $obj.attr( obj.attr );  
-      }
-      
-      if( $.type( obj.children ) === 'array'  ){
-        $.each( obj.children, function( i, child ){
-          if( $.type( child ) === 'string' ){
-            $obj.append( child );
-          } else {
-            var $child = toEl( child );
-            $obj.append( $child );
-          }
+      if( Array.isArray( el.children ) ){
+        el.children.forEach( function( child ){
+          el.appendChild( toEl( child ) );
         });
       }
       
-      return $obj;
+      return el;
     }
     
-    if( $.type( $el ) === 'undefined' ){          
-      var $obj = elFromKey( 'object' );
-      
-      var keys = $.keys( obj );
-      if( keys.length > 0 ){
-        var keyAttr = $.map( keys, function( key ){              
-          return key.replace( /\u0020/g, '_' );
-        }).join( ' ' );
-        
-        $obj.attr( 'data-keys', keyAttr );
-      }
-      
-      $.each( obj, function( key, value ){
-        var $property = property( key, value );     
-        $obj.append( $property );
-      });
-      
-      $el = $obj;
-    }
+    var el = createEl( 'object', undefined, key );
     
-    return $el;
+    Object.keys( obj ).forEach( function( key ){
+      el.appendChild( toEl( obj[ key ], key ) );
+    });
+    
+    return el;
   }
-  
-  function toObj( $el ){
-    if( $el.is( 'h5-number' ) ) return $el.text() * 1;
+   
+  function toObj( el ){
+    if( el.nodeType === 3 ) return el.textContent;
     
-    if( $el.is( 'h5-string' ) ) return $el.text() + '';
+    var tag = el.tagName.toLowerCase();
     
-    if( $el.is( 'h5-boolean' ) ) return $el.text().toLowerCase().trim() === 'true';
+    if( tag === 'js-number' ) return el.textContent * 1;
+    if( tag === 'js-string' ) return el.textContent;
+    if( tag === 'js-boolean' ) return el.textContent.trim().toLowerCase() === 'true';
+    if( tag === 'js-null' ) return null;
     
-    if( $el.is( 'h5-array' ) ){
+    if( tag === 'js-array' ){
       var arr = [];
-      
-      $el.find( '> h5-item' ).each( function(){
-        var $value = $( this ).find( '> *' );
-        var child = toObj( $value );
-        arr.push( child );
-      });
-      
+      for( var i = 0; i < el.childNodes.length; i++ ){
+        arr.push( toObj( el.childNodes[ i ] ) );
+      }
       return arr;
     }
     
-    if( $el.is( 'h5-object' ) ){
-      var obj = {};
-      
-      $el.find( '> *' ).each( function( i, child ){
-        var $property = $( child );
-        var key = $property.find( '> h5-key' ).text();
-        var $value = $property.find( '> h5-value > *' );
-        
-        obj[ key ] = toObj( $value );
-      });
-      
+    var obj = {};
+    
+    if( tag === 'js-object' ){
+      var missingKeyIndex = 0;
+      for( var i = 0; i < el.childNodes.length; i++ ){
+        var child = el.childNodes[ i ];
+        if( !child.hasAttribute( 'data-key' ) ){
+          child.setAttribute( 'data-key', 'h5-missing-key-' + missingKeyIndex++ );
+        }
+        obj[ child.getAttribute( 'data-key' ) ] = toObj( child );
+      }
       return obj;
     }
-
-    if( $el.is( 'h5-property' ) ){
-      var key = toObj( $el.find( '> h5-key' ) );
-      var value = toObj( $el.find( '> h5-value' ) );
-      
-      return { 
-        key: key, 
-        value: value
-      };
-    }
-
-    if( $el.is( 'h5-value' ) ){
-      var $value = $el.find( '> *' );
-      
-      return toObj( $value );
-    }
     
-    if( $el.is( 'h5-key' ) ){
-      return $el.text();
-    }    
+    obj.tagName = el.tagName;
     
-    if( $el.is( 'h5-item' ) ){
-      var $value = $el.find( '> *' );
-      
-      return toObj( $value );
-    }
-    
-    if( $el.is( 'h5-null' ) ) return null;    
-    
-    if( $el.jquery ){
-      if( $el.length === 0 ) return;
-      
-      if( $el.length > 1 ){
-        var arr = [];
-        
-        $el.each( function(){
-          var $child = $( this );
-          arr.push( toObj( $child ) );
-        });
-        
-        return arr;
+    if( el.attributes.length ){
+      obj.attributes = {};
+      for( var i = 0; i < el.attributes.length; i++ ){
+        var attr = el.attributes[ i ];
+        obj.attributes[ attr.nodeName ] = attr.nodeValue;
       }
-      
-      var el = $el[ 0 ];
-      var attr = {};
-      
-      $.each( el.attributes, function( i, attribute ){
-        attr[ attribute.name ] = attribute.value;
-      });
-      
-      var element = {
-        tagName: el.tagName,
-        attr: attr
-      };
-      
-      var children = $el.contents();
-      
-      if( children.length > 0 ){        
-        element.children = [];
-        
-        $.each( children, function( i, child ){
-          if( child.nodeType === 3 ){
-            element.children.push( child.textContent );
-          } else {
-            var $child = $( child );
-            element.children.push( toObj( $child ) );
-          }
-        });
-      }
-      
-      return element;
-    }        
+    }
     
-    //undefined
-    return;
-  };
-  
-  function isPrimitive( $el ){
-    return $el.is( 'h5-null, h5-string, h5-number, h5-boolean' );
-  }  
-  
-  function elFromKey( key ){
-    return $( '<h5-' + key + '></h5-' + key + '>' );
+    if( el.childNodes.length ){
+      obj.children = [];
+      for( var i = 0; i < el.childNodes.length; i++ ){
+        obj.children.push( toObj( el.childNodes[ i ] ) );
+      }
+    }
+    
+    return obj;
   }
-  
-  function literalEl( key, value ){
-    return elFromKey( key ).attr( 'data-value', value ).html( value + '' );
-  }  
-})( jQuery );      
+})( jQuery );
