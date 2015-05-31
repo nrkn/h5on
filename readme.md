@@ -1,14 +1,10 @@
 ![H5ON](h5on.png?raw=true)
 
-# IMPORTANT #
-
-[H5ON is about to undergo a major refactor](https://github.com/nrkn/h5on/issues/1) in the next day or so.
-
 # H5ON (HTML5 Object Notation)
 
 H5ON is an object notation, like [JSON](http://json.org), for representing objects as [HTML5](http://www.w3.org/TR/html5/) elements.
 
-This [working prototype](h5on.js) is implemented as a [jQuery](https://jquery.com/) plugin and is less than 2KB minified and gzipped.
+This [working prototype](h5on.js) is implemented as a [jQuery](https://jquery.com/) plugin and is less than 1KB minified and gzipped.
 
 It came out of a thought experiment with two goals in mind:
 
@@ -69,7 +65,7 @@ It's recommended that you use CSS (such as the included h5on.css) to style H5ON 
 ###Traverse H5ON using selectors
 
 ```javascript
-var $age = $person.find( 'h5-value[data-key="age"]' );
+var $age = $person.find( '[data-key="age"]' );
 ```
 
 ###Convert H5ON to an object
@@ -90,32 +86,10 @@ var $age = $.h5on( 39 );
 
 The plugin expects you to respect the [H5ON syntax](#syntax) and performs no error checking. 
 
-When converting back to a JavaScript object, ``data-`` attributes are ignored, the syntax below explains how H5ON objects are converted to JavaScript objects.
-
-However, changing the H5ON DOM via jQuery means that the auto-generated attributes used for traversal may get out of sync. If you intend to perform selector queries subsequent to editing the DOM, call the h5on method on the jQuery object with the argument ``'reflow'`` to update the attributes:
+When creating a property for an object, pass the key as the second argument to the static helper:
 
 ```javascript
-$recentlyModified.h5on( 'reflow' );
-```
-
-Another caveat is adding properties to objects, and items to arrays - there are overloads on the static ``$.h5on()`` method for creating these elements:
-
-```javascript
-//add a property to an object
-$someH5Object.append( $.h5on( { key: 'age', value: 39 }, 'property' ) );
-
-//add an item to an array
-$someH5Array.append( $.h5on( 'Hello World', 'item' ) );
-```
-
-In both of these cases it is recommend that you use ``'reflow'`` as described above to update the attributes.
-
-Please note that the reflow method brute force rebuilds the entire H5ON DOM, so you will lose any events etc. attached to these elements (pull request welcomed!) - this won't affect you if you instead attach the event to a parent element in the DOM with a selector filter, for example:
-
-```javascript
-$( document ).on( 'click', 'h5-object', function(){
-//...
-});
+$someH5Object.append( $.h5on( 39, 'age' ) );
 ```
 
 ###Mixing HTML and H5ON
@@ -148,51 +122,27 @@ The ``children`` array can contain any mixture of text nodes (as strings), eleme
 #### Find all of a specific type
 ```javascript
 //strings
-var $strings = $( 'h5-string' );
+var $strings = $( 'js-string' );
 
 //objects
-var $objects = $( 'h5-object' );
+var $objects = $( 'js-object' );
 
 //etc.
 ```
 
 #### Find all objects that have a certain key
 ```javascript
-var $withWeights = $( 'h5-object:has( > [data-key="Weight"] )' );
+var $withWeights = $( 'js-object:has( > [data-key="Weight"] )' );
 ```
 
 #### Find all objects with a certain key value pair
 ```javascript
-var $containers = $( 'h5-object:has( > [data-key="Type"][data-value="Container"] )' );
+var $containers = $( 'js-object:has( > [data-key="Type"]:valEq( "Container" ) )' );
 ```
 
 #### Find all objects that contain a certain type
 ```javascript
-var $withArrays = $( 'h5-object:has( > [data-type="array"] )' );
-```
-
-#### Get all keys
-```javascript
-var $keys = $( 'h5-key' );
-```
-
-#### Get all values
-```javascript
-var $values = $( 'h5-value' );
-```
-
-#### Get all properties
-```javascript
-var $properties = $( 'h5-property' );
-```
-
-Please note that this will convert each property to a key/value pair object:
-
-```javascript
-{
-  "key": "name",
-  "value": "Akosua"
-}
+var $withArrays = $( 'js-object:has( > js-array )' );
 ```
 
 #### Custom selector expressions
@@ -200,6 +150,7 @@ Please note that this will convert each property to a key/value pair object:
 The plugin has the following custom selector expressions:
 
 ```css
+:valEq( value )
 :valLte( value )
 :valLt( value )
 :valGte( value )
@@ -209,12 +160,8 @@ The plugin has the following custom selector expressions:
 For example:
 
 ```javascript
-var $lightObjects = $( 'h5-object:has( > [data-key="Weight"]:valLt( 500 ) )' )
+var $lightObjects = $( 'js-object:has( > [data-key="Weight"]:valLt( 500 ) )' )
 ```
-
-### Coming soon (maybe?)
-
-~~Add jQuery selector extensions to test values, eg :valGt( 4 ), :valGte( 4 ) etc.~~ - done! 
 
 ## Why would you want to traverse an object graph with jQuery?
 
@@ -279,7 +226,7 @@ In addition, H5ON also maps non-H5ON elements to and from JavaScript objects so 
 //convert a JavaScript object to H5ON
 var $h5Data = $.h5on( input );
 //find all objects in the object graph with a key matching "Weight"
-var $h5WithWeights = $h5Data.find( 'h5-object:has( > [data-key]="Weight" )' );
+var $h5WithWeights = $h5Data.find( 'js-object:has( > [data-key]="Weight" )' );
 //convert the H5ON back to a JavaScript object
 var output = $h5WithWeights.h5on();
 ```
@@ -287,7 +234,7 @@ var output = $h5WithWeights.h5on();
 Or, in one line:
 
 ```javascript
-var output = $.h5on( input ).find( 'h5-object:has( > [data-key]="Weight" )' ).h5on();
+var output = $.h5on( input ).find( 'js-object:has( > [data-key]="Weight" )' ).h5on();
 ```
 
 #### Output
@@ -354,203 +301,57 @@ var output = $.h5on( input ).find( 'h5-object:has( > [data-key]="Weight" )' ).h5
 
 ## What do you mean by human readable?
 
-When we say "human readable", we mean as rendered by a browser's layout engine.
-The notation for H5ON is more verbose than would be necessary if it were just a data transport mechanism.
-This is because H5ON is richly decorated with attributes and wrapper elements. 
-The purpose of this is twofold:
-
-1. Simpler selectors when traversing
-2. Displayed meaningfully when rendered
+When we say "human readable", we primarily mean as rendered by a browser's layout engine.
  
-### Example of browser rendering, using H5ON generated by the input from the previous example and [h5on.css](h5on.css):
+### Example of browser rendering, using H5ON generated by the input from the previous example and [h5on.css](h5on.css), themed with [Solarized Light]( http://ethanschoonover.com/solarized ):
 
 #### Browser rendering
 ![H5ON](view.png?raw=true)
 
-#### Generated H5ON (note verbosity compared to JSON!)
+#### Generated H5ON
 ```html
-<h5-object data-keys="Name Occupation Is_Infected Equipment">
-  <h5-property data-key="Name">
-    <h5-key>Name</h5-key>
-    <h5-value data-key="Name">
-      <h5-string data-value="Akosua">Akosua</h5-string>
-    </h5-value>
-  </h5-property>
-  <h5-property data-key="Occupation">
-    <h5-key>Occupation</h5-key>
-    <h5-value data-key="Occupation">
-      <h5-string data-value="Zombie Hunter">Zombie Hunter</h5-string>
-    </h5-value>
-  </h5-property>
-  <h5-property data-key="Is Infected">
-    <h5-key>Is Infected</h5-key>
-    <h5-value data-key="Is Infected">
-      <h5-boolean data-value="false">false</h5-boolean>
-    </h5-value>
-  </h5-property>
-  <h5-property data-key="Equipment">
-    <h5-key>Equipment</h5-key>
-    <h5-value data-key="Equipment">
-      <h5-array data-length="2">
-        <h5-item data-index="0">
-          <h5-object data-keys="Name Type Capacity Weight Contents">
-            <h5-property data-key="Name">
-              <h5-key>Name</h5-key>
-              <h5-value data-key="Name">
-                <h5-string data-value="Backpack">Backpack</h5-string>
-              </h5-value>
-            </h5-property>
-            <h5-property data-key="Type">
-              <h5-key>Type</h5-key>
-              <h5-value data-key="Type">
-                <h5-string data-value="Container">Container</h5-string>
-              </h5-value>
-            </h5-property>
-            <h5-property data-key="Capacity">
-              <h5-key>Capacity</h5-key>
-              <h5-value data-key="Capacity">
-                <h5-number data-value="40000">40000</h5-number>
-              </h5-value>
-            </h5-property>
-            <h5-property data-key="Weight">
-              <h5-key>Weight</h5-key>
-              <h5-value data-key="Weight">
-                <h5-number data-value="2000">2000</h5-number>
-              </h5-value>
-            </h5-property>
-            <h5-property data-key="Contents">
-              <h5-key>Contents</h5-key>
-              <h5-value data-key="Contents">
-                <h5-array data-length="2">
-                  <h5-item data-index="0">
-                    <h5-object data-keys="Name Type Capacity Weight Contents">
-                      <h5-property data-key="Name">
-                        <h5-key>Name</h5-key>
-                        <h5-value data-key="Name">
-                          <h5-string data-value="Water Bottle">Water Bottle</h5-string>
-                        </h5-value>
-                      </h5-property>
-                      <h5-property data-key="Type">
-                        <h5-key>Type</h5-key>
-                        <h5-value data-key="Type">
-                          <h5-string data-value="Container">Container</h5-string>
-                        </h5-value>
-                      </h5-property>
-                      <h5-property data-key="Capacity">
-                        <h5-key>Capacity</h5-key>
-                        <h5-value data-key="Capacity">
-                          <h5-number data-value="1000">1000</h5-number>
-                        </h5-value>
-                      </h5-property>
-                      <h5-property data-key="Weight">
-                        <h5-key>Weight</h5-key>
-                        <h5-value data-key="Weight">
-                          <h5-number data-value="0.2">0.2</h5-number>
-                        </h5-value>
-                      </h5-property>
-                      <h5-property data-key="Contents">
-                        <h5-key>Contents</h5-key>
-                        <h5-value data-key="Contents">
-                          <h5-array data-length="1">
-                            <h5-item data-index="0">
-                              <h5-object data-keys="Name Weight">
-                                <h5-property data-key="Name">
-                                  <h5-key>Name</h5-key>
-                                  <h5-value data-key="Name">
-                                    <h5-string data-value="Water">Water</h5-string>
-                                  </h5-value>
-                                </h5-property>
-                                <h5-property data-key="Weight">
-                                  <h5-key>Weight</h5-key>
-                                  <h5-value data-key="Weight">
-                                    <h5-number data-value="365.9">365.9</h5-number>
-                                  </h5-value>
-                                </h5-property>
-                              </h5-object>
-                            </h5-item>
-                          </h5-array>
-                        </h5-value>
-                      </h5-property>                    
-                    </h5-object>
-                  </h5-item>
-                  <h5-item data-index="1">
-                    <h5-object data-keys="Name Type Weight">
-                      <h5-property data-key="Name">
-                        <h5-key>Name</h5-key>
-                        <h5-value data-key="Name">
-                          <h5-string data-value="Necronomicon">Necronomicon</h5-string>
-                        </h5-value>
-                      </h5-property>
-                      <h5-property data-key="Type">
-                        <h5-key>Type</h5-key>
-                        <h5-value data-key="Type">
-                          <h5-string data-value="Book">Book</h5-string>
-                        </h5-value>
-                      </h5-property>
-                      <h5-property data-key="Weight">
-                        <h5-key>Weight</h5-key>
-                        <h5-value data-key="Weight">
-                          <h5-number data-value="0.87">0.87</h5-number>
-                        </h5-value>
-                      </h5-property>
-                    </h5-object>
-                  </h5-item>
-                </h5-array>
-              </h5-value>
-            </h5-property>
-          </h5-object>
-        </h5-item>
-        <h5-item data-index="1">
-          <h5-object data-keys="Name Type Class Damage Weight">
-            <h5-property data-key="Name">
-              <h5-key>Name</h5-key>
-              <h5-value data-key="Name">
-                <h5-string data-value="Katana">Katana</h5-string>
-              </h5-value>
-            </h5-property>
-            <h5-property data-key="Type">
-              <h5-key>Type</h5-key>
-              <h5-value data-key="Type">
-                <h5-string data-value="Weapon">Weapon</h5-string>
-              </h5-value>
-            </h5-property>
-            <h5-property data-key="Class">
-              <h5-key>Class</h5-key>
-              <h5-value data-key="Class">
-                <h5-string data-value="Edged">Edged</h5-string>
-              </h5-value>
-            </h5-property>
-            <h5-property data-key="Damage">
-              <h5-key>Damage</h5-key>
-              <h5-value data-key="Damage">
-                <h5-object data-keys="Base Modifier">
-                  <h5-property data-key="Base">
-                    <h5-key>Base</h5-key>
-                    <h5-value data-key="Base">
-                      <h5-string data-value="4d6">4d6</h5-string>
-                    </h5-value>
-                  </h5-property>
-                  <h5-property data-key="Modifier">
-                    <h5-key>Modifier</h5-key>
-                    <h5-value data-key="Modifier">
-                      <h5-number data-value="-2">-2</h5-number>
-                    </h5-value>
-                  </h5-property>
-                </h5-object>
-              </h5-value>
-            </h5-property>
-            <h5-property data-key="Weight">
-              <h5-key>Weight</h5-key>
-              <h5-value data-key="Weight">
-                <h5-number data-value="1200">1200</h5-number>
-              </h5-value>
-            </h5-property>
-          </h5-object>
-        </h5-item>
-      </h5-array>
-    </h5-value>
-  </h5-property>
-</h5-object>
+<js-object>
+  <js-string data-key="Name">Akosua</js-string>
+  <js-string data-key="Occupation">Zombie Hunter</js-string>
+  <js-boolean data-key="Is Infected">false</js-boolean>
+  <js-array data-key="Equipment">
+    <js-object>
+      <js-string data-key="Name">Backpack</js-string>
+      <js-string data-key="Type">Container</js-string>
+      <js-number data-key="Capacity">40000</js-number>
+      <js-number data-key="Weight">2000</js-number>
+      <js-array data-key="Contents">
+        <js-object>
+          <js-string data-key="Name">Water Bottle</js-string>
+          <js-string data-key="Type">Container</js-string>
+          <js-number data-key="Capacity">1000</js-number>
+          <js-number data-key="Weight">0.2</js-number>
+          <js-array data-key="Contents">
+            <js-object>
+              <js-string data-key="Name">Water</js-string>
+              <js-number data-key="Weight">365.9</js-number>
+            </js-object>
+          </js-array>
+        </js-object>
+        <js-object>
+          <js-string data-key="Name">Necronomicon</js-string>
+          <js-string data-key="Type">Book</js-string>
+          <js-number data-key="Weight">0.87</js-number>
+        </js-object>
+      </js-array>
+    </js-object>
+    <js-object>
+      <js-string data-key="Name">Katana</js-string>
+      <js-string data-key="Type">Weapon</js-string>
+      <js-string data-key="Class">Edged</js-string>
+      <js-object data-key="Damage">
+        <js-string data-key="Base">4d6</js-string>
+        <js-number data-key="Modifier">-2</js-number>
+      </js-object>
+      <js-number data-key="Weight">1200</js-number>
+    </js-object>
+  </js-array>
+</js-object>
 ```
 
 ## Syntax
@@ -569,18 +370,16 @@ Like JSON, possible values are:
 The primitive values are number, string and boolean. The notation for these is:
 
 ```html
-<h5-{{type}} data-value="{{value}}">{{value}}</h5-{{type}}>
+<js-{{type}}>{{value}}</js-{{type}}>
 ```
 
-This duplication of the value (in both an attribute and as a text node) is a good example of favouring verbosity over compactness to make the data easy to traverse and display.
-
-Note that the attributes are used only for ease of selection. When converting back to an object, the plugin expects this element to contain a single text node only, and the text content of that node is converted to the expected type. No error checking is performed!
+When converting back to an object, the plugin expects this element to contain a single text node only, and the text content of that node is converted to the expected type. No error checking is performed!
 
 ### Number
 
 #### H5ON
 ```html
-<h5-number data-value="42">42</h5-number>
+<js-number>42</js-number>
 ```
 
 #### JSON
@@ -592,7 +391,7 @@ Note that the attributes are used only for ease of selection. When converting ba
 
 #### H5ON
 ```html
-<h5-string data-value="Hello World">Hello World</h5-number>
+<js-string>Hello World</js-string>
 ```
 
 #### JSON
@@ -604,7 +403,7 @@ Note that the attributes are used only for ease of selection. When converting ba
 
 #### H5ON
 ```html
-<h5-boolean data-value="false">false</h5-boolean>
+<js-boolean>false</js-boolean>
 ```
 
 #### JSON
@@ -616,16 +415,10 @@ false
 
 #### H5ON
 ```html
-<h5-array data-length="3">
-  <h5-item data-index="0" data-type="number" data-value="42">
-    <h5-number data-value="42">42</h5-number>
-  </h5-item>
-  <h5-item data-index="1" data-type="string" data-value="Hello World">
-    <h5-string data-value="Hello World">Hello World</h5-string>
-  </h5-item>
-  <h5-item data-index="2" data-type="boolean" data-value="false">
-    <h5-boolean data-value="false">false</h5-boolean>
-  </h5-item>
+<js-array>
+  <js-number>42</js-number>
+  <js-string>Hello World</js-string>
+  <js-boolean>false</js-boolean>
 </h5-array>
 ```
 
@@ -634,34 +427,17 @@ false
 [ 42, "Hello World", false ]
 ```
 
-Each array item is wrapped in an <h5-item> element, much like an ordinary list (`<ul><li>` etc.) Again, this is for ease of selection and display.
-
-The attributes are used for selection only - when converting back to an object, the plugin expects an `<h5-array>` to contain only `<h5-item>` elements. The `<h5-item>` element can contain any other element. No error checking is performed!
+When converting back to an object each direct child of the js-array element is considered to be an array element. An array can contain any other value.
 
 ### Object
 
 #### H5ON
 ```html
-<h5-object data-keys="name age hobby">
-  <h5-property data-key="name" data-type="string" data-value="Akosua">
-    <h5-key>name</h5-key>
-    <h5-value data-key="name" data-type="string" data-value="Akosua">
-      <h5-string data-value="Akosua">Akosua</h5-string>    
-    </h5-value>
-  </h5-property>
-  <h5-property data-key="age" data-type="number" data-value="39">
-    <h5-key>age</h5-key>
-    <h5-value data-key="age" data-type="number" data-value="39">
-      <h5-number data-value="39">39</h5-number>
-    </h5-value>
-  </h5-property>
-  <h5-property data-key="hobby" data-type="string" data-value="Hunting zombies">
-    <h5-key>hobby</h5-key>
-    <h5-value data-key="hobby" data-type="string" data-value="Hunting zombies">
-      <h5-string data-value="Hunting zombies">Hunting zombies</h5-string>
-    </h5-value>
-  </h5-property>
-</h5-object>
+<js-object>
+  <js-string data-key="name">Akosua</js-string>    
+  <js-number data-key="age">39</js-number>
+  <js-string data-key="hobby">Hunting zombies</js-string>
+</js-object>
 ```
 
 #### JSON
@@ -673,33 +449,13 @@ The attributes are used for selection only - when converting back to an object, 
 }
 ```
 
-An object consists of any number of properties, each of which is a key-value pair.
-
-The attributes are used for selection only - when converting back to an object, the plugin expects an `<h5-object>` to contain only `<h5-property>` elements. Each `<h5-property>` element is expected to contain a single `<h5-key>` element and a single `<h5-value>` element. The plugin expected the `<h5-key>` element to contain a single text node and the text content of that node is used as the property's key. The `<h5-value>` element can contain anything. No error checking is performed!
-
-Please note - the object has an attribute, `[data-keys]` which contains a whitespace separated list of keys. Because the list is whitespaced, any keys with a space in them will have their spaces converted to underscores. This allows the use of the [attribute contains word selector](http://api.jquery.com/attribute-contains-word-selector/) to select all objects that have the requested property:
-
-```javascript
-var $objectsWithAWidth = $h5Object.find( 'h5-object[data-keys~="Width"]' );
-```
-
-If we had a key that contained spaces, we would replace them with underscores when using the **attribute contains word selector**:
-
-```javascript
-var $matchingObjects = $h5Object.find( 'h5-object[data-keys~="Key_With_Spaces"]' );
-```
-
-In all other cases the normal key with spaces is fine:
-
-```javascript
-var $matchingValues = $h5Object.find( 'h5-value[data-key="Key With Spaces"]' );
-```
+When converting an H5ON object back to a JavaScript object, every direct child of the js-object element is considered to be a property on the JS object. Each direct child should have an attribute `data-key` and this will be used as the key on the resulting object. If the attribute is missing an autogenerated key will be used.
 
 ### Null
 
 #### H5ON
 ```html
-<h5-null />
+<js-null />
 ```
 
 #### JSON
