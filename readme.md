@@ -19,12 +19,13 @@ Despite that caveat, you can do some interesting and powerful things using this 
 
 1. [Usage](#usage)
   1. [Node.js](#nodejs)
-  2. [Convert an object to H5ON](#convert-an-object-to-h5on)
-  3. [Place H5ON in the DOM for viewing](#place-h5on-in-the-dom-for-viewing)
-  4. [Traverse H5ON using selectors](#traverse-h5on-using-selectors)
-  5. [Convert H5ON to an object](#convert-h5on-to-an-object)
-  6. [Manipulation](#manipulation)
-  7. [Mixing HTML and H5ON](#mixing-html-and-h5on)
+  2. [jQuery](#jquery)
+  3. [Convert an object to H5ON](#convert-an-object-to-h5on)
+  4. [Place H5ON in the DOM for viewing](#place-h5on-in-the-dom-for-viewing)
+  5. [Traverse H5ON using selectors](#traverse-h5on-using-selectors)
+  6. [Convert H5ON to an object](#convert-h5on-to-an-object)
+  7. [Manipulation](#manipulation)
+  8. [Mixing HTML and H5ON](#mixing-html-and-h5on)
 2. [Demos and Examples](#demos-and-examples)
   1. [Demos](#demos)
   2. [Selector Examples](#selector-examples)
@@ -45,8 +46,6 @@ Despite that caveat, you can do some interesting and powerful things using this 
 
 ## Usage
 
-Note: the traversal examples etc. assume you are using the jQuery plugin. See the next section for Node.js usage.
-
 ### Node.js
 
 `npm install h5on`
@@ -59,6 +58,14 @@ var domElements = h5on.toEl( data );
 // do something with elements
 var backToJsObject = h5on.toObj( domElements );
 ```
+
+The rest of this document assumes that you are using the jQuery plugin - the only real differences are traversal (but you can use `document.querySelector` or a library), the [custom selectors](#custom-selector-expressions) included in the jQuery plugin, and that you convert to and from JS objects using the static methods outlined above rather than the static `$.h5on` and `$instance.h5on()` methods.
+
+### jQuery
+
+Download and reference [h5on.jquery.min.js](h5on.jquery.min.js) and [h5on.css](h5on.css).
+
+**TODO: Bower**
 
 ### Convert an object to H5ON
 
