@@ -2,13 +2,13 @@ module.exports = function( grunt ){
   grunt.initConfig({
     pkg: grunt.file.readJSON( 'package.json' ),
     browserify: {
-      'jquery.h5on.js': [ 'src/jquery.h5on.js' ]
+      'h5on.jquery.js': [ 'src/h5on.jquery.js' ]
     },
     uglify: {
       dist: {
         files: {
           'h5on.min.js': [ 'h5on.js' ],
-          'jquery.h5on.min.js': [ 'jquery.h5on.js' ]
+          'h5on.jquery.min.js': [ 'h5on.jquery.js' ]
         }
       }
     },    
