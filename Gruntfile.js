@@ -2,7 +2,7 @@ module.exports = function( grunt ){
   grunt.initConfig({
     pkg: grunt.file.readJSON( 'package.json' ),
     browserify: {
-      '/src/jquery.h5on.js': [ './jqyery.h5on.js' ]
+      'jquery.h5on.js': [ 'src/jquery.h5on.js' ]
     },
     uglify: {
       dist: {
