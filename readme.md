@@ -1,5 +1,7 @@
 ![H5ON](img/h5on.png?raw=true)
 
+![Side by side comparison](img/compare.png?raw=true)
+
 # H5ON (HTML5 Object Notation)
 
 H5ON is an object notation, like [JSON](http://json.org), for representing objects as [HTML5](http://www.w3.org/TR/html5/) elements.
