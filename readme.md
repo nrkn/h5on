@@ -15,7 +15,7 @@ As this is the fruit of a thought experiment, please be aware that there are man
 
 Despite that caveat, you can do some interesting and powerful things using this approach. jQuery is a sophisticated traversal library and contains a lot of useful ways to search and filter data.
 
-#Table of Contents
+# Table of Contents
 
 1. [Usage](#usage)
   1. [Convert an object to H5ON](#convert-an-object-to-h5on)
@@ -59,7 +59,7 @@ var domElements = h5on.toEl( data );
 var backToJsObject = h5on.toObj( domElements );
 ```
 
-###Convert an object to H5ON
+### Convert an object to H5ON
 
 ```javascript
 var person = {
@@ -69,7 +69,7 @@ var person = {
 var $person = $.h5on( person );
 ```
 
-###Place H5ON in the DOM for viewing
+### Place H5ON in the DOM for viewing
 
 ```javascript
 $( 'body' ).append( $person );
@@ -77,13 +77,13 @@ $( 'body' ).append( $person );
 
 It's recommended that you use CSS (such as the included h5on.css) to style H5ON elements, otherwise the browser won't know how to render them and it'll come out as a mess of plain text.
 
-###Traverse H5ON using selectors
+### Traverse H5ON using selectors
 
 ```javascript
 var $age = $person.find( '[data-key="age"]' );
 ```
 
-###Convert H5ON to an object
+### Convert H5ON to an object
 
 ```javascript
 var age = $age.h5on();
@@ -107,7 +107,7 @@ When creating a property for an object, pass the key as the second argument to t
 $someH5Object.append( $.h5on( 39, 'age' ) );
 ```
 
-###Mixing HTML and H5ON
+### Mixing HTML and H5ON
 
 The H5ON DOM can contain arbitrary HTML at any point. HTML is converted to and from JavaScript objects using the following syntax:
 
