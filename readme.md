@@ -4,12 +4,12 @@
 
 H5ON is an object notation, like [JSON](http://json.org), for representing objects as [HTML5](http://www.w3.org/TR/html5/) elements.
 
-This [working prototype](h5on.js) is implemented as a [jQuery](https://jquery.com/) plugin and is less than 1KB minified and gzipped.
+This document describes the syntax. The project contains both a Node.js and a jQuery plugin implementation.
 
 It came out of a thought experiment with two goals in mind:
 
-1. Traverse a JavaScript object graph using jQuery
-2. The notation itself is rendered by layout engines in a human readable format
+1. How would I traverse a JavaScript object graph using jQuery?
+2. How can I have an object notation that the browser displays meaningfully?
 
 As this is the fruit of a thought experiment, please be aware that there are many alternative ways to traverse object graphs, and that for the most part they are much saner than this one. You have been warned!
 
@@ -43,6 +43,21 @@ Despite that caveat, you can do some interesting and powerful things using this 
 7. [License](#license)
 
 ## Usage
+
+Note: the traversal examples etc. assume you are using the jQuery plugin. See the next section for Node.js usage.
+
+### Node.js
+
+`npm install h5on`
+
+h5on requires a reference to a document - use window.document in the browser, otherwise you can use jsdom or similar:
+
+```javascript
+var h5on = require( 'h5on' )( document );
+var domElements = h5on.toEl( data );
+// do something with elements
+var backToJsObject = h5on.toObj( domElements );
+```
 
 ###Convert an object to H5ON
 
