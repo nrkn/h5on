@@ -15,7 +15,12 @@
     "notation"
   ],
   "author": "Nik Coughlin",
-  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/nrkn/h5on/blob/master/license.txt"
+    }
+  ],    
   "bugs": {
     "url": "https://github.com/nrkn/h5on/issues"
   },
