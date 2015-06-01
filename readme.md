@@ -52,7 +52,7 @@ Despite that caveat, you can do some interesting and powerful things using this 
 
 `npm install h5on`
 
-h5on requires a reference to a document - use window.document in the browser, otherwise you can use jsdom or similar:
+h5on requires a reference to a document - use `window.document` in the browser, otherwise you can use `jsdom` or similar:
 
 ```javascript
 var h5on = require( 'h5on' )( document );
