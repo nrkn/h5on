@@ -1,7 +1,7 @@
 {
   "name": "h5on",
   "version": "0.0.1",
-  "description": "HTML5 Object Notation ",
+  "description": "HTML5 Object Notation",
   "main": "h5on.js",
   "repository": {
     "type": "git",
