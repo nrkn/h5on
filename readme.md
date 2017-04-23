@@ -17,6 +17,10 @@ As this is the fruit of a thought experiment, please be aware that there are man
 
 Despite that caveat, you can do some interesting and powerful things using this approach. jQuery is a sophisticated traversal library and contains a lot of useful ways to search and filter data.
 
+# Sanity Check
+
+Alternatively, you can traverse JSON data and run CSS selectors against it using [these plugins](https://github.com/mojule/json-dom-plugins) for [JSON tree](https://github.com/mojule/json-tree)
+
 # Table of Contents
 
 1. [Usage](#usage)
